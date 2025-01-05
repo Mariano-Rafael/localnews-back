@@ -36,6 +36,9 @@ public class UserService {
         if (userModel.getPassword() == null || userModel.getPassword().length() < 8) {
             throw new InvalidPasswordException("A senha deve ter no mínimo 8 caracteres.");
         }
+        if (userModel.getUsername() == null || userModel.getUsername().length() < 8) {
+            throw new InvalidUsernameException("O nome de usuário deve ter no mínimo 8 caracteres.");
+        }
         userModel.setPassword(passwordEncoder.encode(userModel.getPassword()));
         return userRepository.save(userModel);
     }
@@ -49,18 +52,21 @@ public class UserService {
     }
 
     // atualiza usuário pelo id
-    public Optional<UserModel> updateUser(Long id, UserModel userModel) {
+    public void updateUser(Long id, UserModel userModel) {
         if (userRepository.findById(id).isEmpty()) {
-            throw new RuntimeException("Usuário não encontrado.");
+            throw new UserNotFoundException("Usuário não encontrado.");
         }
-        return userRepository.findById(id)
+        userRepository.findById(id)
                 .map(existingUserModel -> {
-                    existingUserModel.setUsername(userModel.getUsername());
-                    existingUserModel.setPassword(userModel.getPassword());
-
-                    if (userModel.getPassword() != null) {
-                        existingUserModel.setPassword(passwordEncoder.encode(userModel.getPassword()));
+                    if (userModel.getUsername() == null && userModel.getUsername().length() < 8) {
+                        throw new InvalidUsernameException("O nome de usuário deve ter no mínimo 8 caracteres.");
                     }
+                    if (userModel.getPassword() == null && userModel.getPassword().length() < 8) {
+                        throw new InvalidPasswordException("A senha deve ter no mínimo 8 caracteres.");
+                    }
+
+                    existingUserModel.setUsername(userModel.getUsername());
+                    existingUserModel.setPassword(passwordEncoder.encode(userModel.getPassword()));
                     return userRepository.save(existingUserModel);
                 });
     }

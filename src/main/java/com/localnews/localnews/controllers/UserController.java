@@ -31,7 +31,7 @@ public class UserController {
         catch (UsernamelAlreadyExistsException | EmailAlreadyExistsException e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(new BooleanResponseModel(false,e.getMessage()));
         }
-        catch (InvalidEmailException | InvalidPasswordException e) {
+        catch (InvalidEmailException | InvalidPasswordException | InvalidUsernameException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new BooleanResponseModel(false, e.getMessage()));
         }
         catch (RuntimeException e) {
@@ -62,11 +62,14 @@ public class UserController {
         try {
             userService.updateUser(id, userModel);
             return ResponseEntity.ok(new BooleanResponseModel(true, "Usuário atualizado com sucesso."));
-        } catch (UserNotFoundException e) {
+        }
+        catch (UserNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new BooleanResponseModel(false, e.getMessage()));
-        } catch (InvalidEmailException | InvalidPasswordException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-        } catch (RuntimeException e) {
+        }
+        catch (InvalidEmailException | InvalidPasswordException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new BooleanResponseModel(false, e.getMessage()));
+        }
+        catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro interno.");
 
         }
