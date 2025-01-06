@@ -1,6 +1,5 @@
 package com.localnews.localnews.services;
 
-import com.localnews.localnews.models.BooleanResponseModel;
 import com.localnews.localnews.models.UserDTO;
 import com.localnews.localnews.models.UserModel;
 import com.localnews.localnews.models.exceptions.*;
@@ -72,11 +71,10 @@ public class UserService {
     }
 
     // deleta usuário pelo id
-    public Optional<BooleanResponseModel> deleteUser(Long id) {
-        return userRepository.findById(id)
-                .map(user -> {
-                    userRepository.delete(user);
-                    return Optional.of(new BooleanResponseModel(true, "Usuário deletado com sucesso."));
-                }).orElse(Optional.of(new BooleanResponseModel(false, "Usuário não encontrado!")));
+    public void deleteUser(Long id) {
+        if (userRepository.findById(id).isEmpty() || !userRepository.existsById(id)) {
+            throw new UserNotFoundException("Usuário nao encontrado.");
+        }
+        userRepository.deleteById(id);
     }
 }

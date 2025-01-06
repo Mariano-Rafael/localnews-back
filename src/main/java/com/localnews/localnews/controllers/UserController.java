@@ -77,9 +77,13 @@ public class UserController {
 
     // deleta um usuário pelo id
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<BooleanResponseModel> deleteUser(@PathVariable Long id) {
-        Optional<BooleanResponseModel> response = userService.deleteUser(id);
-        return response.map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<?> deleteUser(@Validated@PathVariable Long id) {
+        try {
+            userService.deleteUser(id);
+            return ResponseEntity.ok(new BooleanResponseModel(true, "Usuário deletado com sucesso."));
+        }
+        catch (UserNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new BooleanResponseModel(false, e.getMessage()));
+        }
     }
 }
