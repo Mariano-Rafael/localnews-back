@@ -24,6 +24,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(req -> {
                     req.requestMatchers(toH2Console()).permitAll();
                     req.requestMatchers("/users/**").permitAll();
+                    req.requestMatchers("/news/**").permitAll();
                 })
                 .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
                 .build();

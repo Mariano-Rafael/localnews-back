@@ -1,4 +1,4 @@
-package com.localnews.localnews.models;
+package com.localnews.localnews.models.userModels;
 
 import jakarta.persistence.*;
 

@@ -1,9 +1,9 @@
-package com.localnews.localnews.services;
+package com.localnews.localnews.services.userServices;
 
-import com.localnews.localnews.models.UserDTO;
-import com.localnews.localnews.models.UserModel;
-import com.localnews.localnews.models.exceptions.*;
-import com.localnews.localnews.repositories.UserRepository;
+import com.localnews.localnews.models.userModels.UserDTO;
+import com.localnews.localnews.models.userModels.UserModel;
+import com.localnews.localnews.models.usersExceptions.*;
+import com.localnews.localnews.repositories.userRepositories.UserRepository;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;

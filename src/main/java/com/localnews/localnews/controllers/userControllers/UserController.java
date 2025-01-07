@@ -1,10 +1,10 @@
-package com.localnews.localnews.controllers;
+package com.localnews.localnews.controllers.userControllers;
 
 import com.localnews.localnews.models.BooleanResponseModel;
-import com.localnews.localnews.models.UserDTO;
-import com.localnews.localnews.models.UserModel;
-import com.localnews.localnews.models.exceptions.*;
-import com.localnews.localnews.services.UserService;
+import com.localnews.localnews.models.userModels.UserDTO;
+import com.localnews.localnews.models.userModels.UserModel;
+import com.localnews.localnews.models.usersExceptions.*;
+import com.localnews.localnews.services.userServices.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -84,6 +84,10 @@ public class UserController {
         }
         catch (UserNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new BooleanResponseModel(false, e.getMessage()));
+        }
+        catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new BooleanResponseModel(false,
+                    "Erro interno."));
         }
     }
 }

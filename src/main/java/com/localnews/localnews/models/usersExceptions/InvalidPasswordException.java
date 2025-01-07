@@ -1,4 +1,4 @@
-package com.localnews.localnews.models.exceptions;
+package com.localnews.localnews.models.usersExceptions;
 
 import java.io.Serial;
 
