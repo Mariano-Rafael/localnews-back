@@ -10,7 +10,6 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.*;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -30,11 +29,15 @@ public class NewsService {
     private String newsApiKey;
 
     public Page<NewsModel> searchNews(String title, String content, Pageable pageable) {
+        if (title == null && content == null)  {
+            return newsRepository.findAllNews(pageable);
+    } else {
         return newsRepository.findByTitleOrContentIgnoreCaseContaining(title, content, pageable);
     }
+}
 
-    public NewsModel saveNews(NewsModel newsModel) {
-        return newsRepository.save(newsModel);
+    public void saveNews(NewsModel newsModel) {
+        newsRepository.save(newsModel);
     }
 
     public List<NewsApiResponse.Article> fetchNewsFromApi() {
@@ -57,10 +60,13 @@ public class NewsService {
         }
     }
 
-    @Scheduled(fixedRate = 3600000)
     public void fetchAndSaveNews() {
         try {
             List<NewsApiResponse.Article> articles = fetchNewsFromApi();
+
+            String url = "https://newsapi.org/v2/top-headlines?sources=google-news-br&&apikey=" + newsApiKey;
+
+            System.out.println("URL da requisição: " + url);
             for (NewsApiResponse.Article article : articles) {
                 NewsModel newsModel = new NewsModel();
                 newsModel.setTitle(article.getTitle());

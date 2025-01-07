@@ -8,6 +8,7 @@ public class LocalnewsApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(LocalnewsApplication.class, args);
+
 	}
 
 }

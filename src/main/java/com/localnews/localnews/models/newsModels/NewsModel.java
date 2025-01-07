@@ -19,6 +19,10 @@ public class NewsModel {
 
     private String author;
 
+    private String sourceId;
+
+    private String sourceName;
+
     @Column(nullable = false)
     private LocalDateTime publicationDate;
 

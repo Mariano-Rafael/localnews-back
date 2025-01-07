@@ -42,21 +42,25 @@ public class NewsApiResponse {
 
     public static class Article {
         private Source source;
+        private String author;
         private String title;
         private String description;
-        private String author;
-        private String publishedAt;
         private String url;
+        private String publishedAt;
+        private String content;
 
 
         public Article() {
         }
 
-        public Article(String title, String description, String author, String publishedAt) {
+        public Article(Source source, String author, String title, String description, String url, String publishedAt, String content) {
+            this.source = source;
+            this.author = author;
             this.title = title;
             this.description = description;
-            this.author = author;
+            this.url = url;
             this.publishedAt = publishedAt;
+            this.content = content;
         }
 
         public String getTitle() {
@@ -106,6 +110,14 @@ public class NewsApiResponse {
         public void setUrl(String url) {
             this.url = url;
         }
+
+        public String getContent() {
+            return content;
+        }
+
+        public void setContent(String content) {
+            this.content = content;
+        }
     }
 
     private Source source;
@@ -139,5 +151,4 @@ public class NewsApiResponse {
         }
     }
 
-    // comentando pra commitar;
 }
