@@ -72,6 +72,7 @@ public class NewsService {
                 newsModel.setContent(article.getDescription());
                 newsModel.setAuthor(article.getAuthor());
                 newsModel.setPublicationDate(LocalDateTime.parse(article.getPublishedAt(), DateTimeFormatter.ISO_DATE_TIME));
+                newsModel.setUrlNews(article.getUrl());
 
                 saveNews(newsModel);
             }

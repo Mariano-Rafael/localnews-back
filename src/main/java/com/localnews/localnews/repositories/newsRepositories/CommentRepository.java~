@@ -1,0 +1,4 @@
+package com.localnews.localnews.repositories.newsRepositories;
+
+public interface CommentRepository {
+}

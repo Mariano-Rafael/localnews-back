@@ -26,15 +26,19 @@ public class NewsModel {
     @Column(nullable = false)
     private LocalDateTime publicationDate;
 
+    @Column(columnDefinition = "TEXT")
+    private String urlNews;
+
     public NewsModel() {
     }
 
-    public NewsModel(Long id, String title, String content, String author, LocalDateTime publicationDate) {
+    public NewsModel(Long id, String title, String content, String author, LocalDateTime publicationDate, String urlNews) {
         this.id = id;
         this.title = title;
         this.content = content;
         this.author = author;
         this.publicationDate = publicationDate;
+        this.urlNews = urlNews;
     }
 
     public Long getId() {
@@ -75,5 +79,13 @@ public class NewsModel {
 
     public void setPublicationDate(LocalDateTime publicationDate) {
         this.publicationDate = publicationDate;
+    }
+
+    public String getUrlNews() {
+        return urlNews;
+    }
+
+    public void setUrlNews(String urlNews) {
+        this.urlNews = urlNews;
     }
 }
