@@ -4,6 +4,7 @@ import com.localnews.localnews.models.BooleanResponseModel;
 import com.localnews.localnews.models.newsModels.NewsApiResponse;
 import com.localnews.localnews.models.newsModels.NewsModel;
 import com.localnews.localnews.repositories.newsRepositories.NewsRepository;
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
@@ -40,6 +41,7 @@ public class NewsService {
         newsRepository.save(newsModel);
     }
 
+
     public List<NewsApiResponse.Article> fetchNewsFromApi() {
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
@@ -60,13 +62,10 @@ public class NewsService {
         }
     }
 
+    @PostConstruct
     public void fetchAndSaveNews() {
         try {
             List<NewsApiResponse.Article> articles = fetchNewsFromApi();
-
-            String url = "https://newsapi.org/v2/top-headlines?sources=google-news-br&&apikey=" + newsApiKey;
-
-            System.out.println("URL da requisição: " + url);
             for (NewsApiResponse.Article article : articles) {
                 NewsModel newsModel = new NewsModel();
                 newsModel.setTitle(article.getTitle());
