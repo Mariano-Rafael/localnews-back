@@ -77,7 +77,7 @@ public class UserController {
 
     // deleta um usuário pelo id
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> deleteUser(@Validated @PathVariable Long id) {
+    public ResponseEntity<?> deleteUser(@Validated@PathVariable Long id) {
         try {
             userService.deleteUser(id);
             return ResponseEntity.ok(new BooleanResponseModel(true,

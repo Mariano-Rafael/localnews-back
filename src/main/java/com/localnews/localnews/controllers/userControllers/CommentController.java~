@@ -25,12 +25,12 @@ public class CommentController {
                     "Comentário criado com sucesso."));
     }
         catch (CommentOrLikeNotFound e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new BooleanResponseModel(false,
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new BooleanResponseModel(false,
                     e.getMessage()));
         }
         catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new BooleanResponseModel(false,
-                    "Erro interno."));
+                    e.getMessage()));
         }
     }
 
@@ -47,7 +47,7 @@ public class CommentController {
         }
         catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new BooleanResponseModel(false,
-                    "Erro interno."));
+                    e.getMessage()));
         }
     }
 }

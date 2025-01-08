@@ -1,4 +1,0 @@
-package com.localnews.localnews.services.userServices;
-
-public class CommentService {
-}
