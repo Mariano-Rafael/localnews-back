@@ -30,19 +30,17 @@ public class NewsModel {
     private String urlNews;
 
     @Column(name = "likes_count", nullable = false, columnDefinition = "INT DEFAULT 0")
-    private Integer likesCount;
 
     public NewsModel() {
     }
 
-    public NewsModel(Long id, String title, String content, String author, LocalDateTime publicationDate, String urlNews, Integer likesCount) {
+    public NewsModel(Long id, String title, String content, String author, LocalDateTime publicationDate, String urlNews) {
         this.id = id;
         this.title = title;
         this.content = content;
         this.author = author;
         this.publicationDate = publicationDate;
         this.urlNews = urlNews;
-        this.likesCount = likesCount;
     }
 
     public Long getId() {
@@ -91,29 +89,5 @@ public class NewsModel {
 
     public void setUrlNews(String urlNews) {
         this.urlNews = urlNews;
-    }
-
-    public String getSourceId() {
-        return sourceId;
-    }
-
-    public void setSourceId(String sourceId) {
-        this.sourceId = sourceId;
-    }
-
-    public String getSourceName() {
-        return sourceName;
-    }
-
-    public void setSourceName(String sourceName) {
-        this.sourceName = sourceName;
-    }
-
-    public Integer getLikesCount() {
-        return likesCount;
-    }
-
-    public void setLikesCount(Integer likesCount) {
-        this.likesCount = likesCount;
     }
 }

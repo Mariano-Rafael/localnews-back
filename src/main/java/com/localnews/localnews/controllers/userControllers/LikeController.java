@@ -2,27 +2,31 @@ package com.localnews.localnews.controllers.userControllers;
 
 import com.localnews.localnews.models.BooleanResponseModel;
 import com.localnews.localnews.models.CommentsAndLikesExceptions.CommentOrLikeNotFound;
-import com.localnews.localnews.models.CommentsAndLikesExceptions.NewsOrUserNotFoundException;
-import com.localnews.localnews.models.userModels.CommentModel;
-import com.localnews.localnews.services.userServices.CommentService;
+import com.localnews.localnews.models.userModels.LikeModel;
+import com.localnews.localnews.services.newsServices.NewsService;
+import com.localnews.localnews.services.userServices.LikeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+
 @RestController
-@RequestMapping("/comments")
-public class CommentController {
+@RequestMapping("/likes")
+public class LikeController {
 
     @Autowired
-    private CommentService commentService;
+    private LikeService likeService;
 
-    @PostMapping("/create")
-    public ResponseEntity<?> createComment(@RequestBody CommentModel commentModel) {
+    @Autowired
+    private NewsService newsService;
+
+    @PostMapping("/register")
+    public ResponseEntity<?> createLike(@RequestBody LikeModel likeModel) {
         try {
-            CommentModel createdComment = commentService.createComment(commentModel);
+            LikeModel createdLike = likeService.createLike(likeModel);
             return ResponseEntity.status(HttpStatus.CREATED).body(new BooleanResponseModel(true,
-                    "Comentário criado com sucesso."));
+                    "Like registrado."));
         }
         catch (CommentOrLikeNotFound e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new BooleanResponseModel(false,
@@ -34,15 +38,14 @@ public class CommentController {
         }
     }
 
-    // atualiza um comentário pelo id do mesmo
-    @PutMapping("/update/{id}")
-    public ResponseEntity<?> updateComment(@PathVariable Long id, @RequestBody CommentModel commentModel) {
+    @DeleteMapping("/unlike")
+    public ResponseEntity<?> unlike(@PathVariable Long id) {
         try {
-            CommentModel updatedComment = commentService.updateComment(id, commentModel);
+            likeService.unlike(id);
             return ResponseEntity.ok(new BooleanResponseModel(true,
-                    "Comentário atualizado com sucesso."));
+                    "Like retirado."));
         }
-        catch (CommentOrLikeNotFound | NewsOrUserNotFoundException e) {
+        catch (CommentOrLikeNotFound e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new BooleanResponseModel(false,
                     e.getMessage()));
         }
@@ -52,12 +55,12 @@ public class CommentController {
         }
     }
 
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> deleteComment(@PathVariable Long id) {
+    @GetMapping("/info/{id}")
+    public ResponseEntity<?> countLikesByNewsId(@PathVariable Long id) {
         try {
-            commentService.deleteComment(id);
+            int likeCount = likeService.countLikes(id);
             return ResponseEntity.ok(new BooleanResponseModel(true,
-                    "Comentário deletado com sucesso."));
+                    "Quantidade de likes: " + likeCount));
         }
         catch (CommentOrLikeNotFound e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new BooleanResponseModel(false,

@@ -18,16 +18,16 @@ public class CommentModel {
 
     @ManyToOne
     @JoinColumn(name = "news_id", nullable = false)
-    private NewsModel newsModel;
+    private NewsModel news;
 
     public CommentModel() {
     }
 
-    public CommentModel(Long id, String comment, UserModel userModel, NewsModel newsModel) {
+    public CommentModel(Long id, String comment, UserModel userModel, NewsModel news) {
         this.id = id;
         this.comment = comment;
         this.userModel = userModel;
-        this.newsModel = newsModel;
+        this.news = news;
     }
 
     public Long getId() {
@@ -54,11 +54,11 @@ public class CommentModel {
         this.userModel = userModel;
     }
 
-    public NewsModel getNewsModel() {
-        return newsModel;
+    public NewsModel getNews() {
+        return news;
     }
 
-    public void setNewsModel(NewsModel newsModel) {
-        this.newsModel = newsModel;
+    public void setNews(NewsModel news) {
+        this.news = news;
     }
 }

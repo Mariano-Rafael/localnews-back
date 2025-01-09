@@ -7,7 +7,6 @@ import com.localnews.localnews.services.userServices.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -23,14 +22,32 @@ public class CommentController {
             CommentModel createdComment = commentService.createComment(commentModel);
             return ResponseEntity.status(HttpStatus.CREATED).body(new BooleanResponseModel(true,
                     "Comentário criado com sucesso."));
-    }
+        }
         catch (CommentOrLikeNotFound e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new BooleanResponseModel(false,
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new BooleanResponseModel(false,
                     e.getMessage()));
         }
         catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new BooleanResponseModel(false,
+                    "Erro interno."));
+        }
+    }
+
+    // atualiza um comentário pelo id do mesmo
+    @PutMapping("/update/{id}")
+    public ResponseEntity<?> updateComment(@PathVariable Long id, @RequestBody CommentModel commentModel) {
+        try {
+            CommentModel updatedComment = commentService.updateComment(id, commentModel);
+            return ResponseEntity.ok(new BooleanResponseModel(true,
+                    "Comentário atualizado com sucesso."));
+        }
+        catch (CommentOrLikeNotFound e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new BooleanResponseModel(false,
                     e.getMessage()));
+        }
+        catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new BooleanResponseModel(false,
+                    "Erro interno."));
         }
     }
 
@@ -47,7 +64,7 @@ public class CommentController {
         }
         catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new BooleanResponseModel(false,
-                    e.getMessage()));
+                    "Erro interno."));
         }
     }
 }
