@@ -46,7 +46,7 @@ public class LikeController {
             return ResponseEntity.ok(new BooleanResponseModel(true,
                     "Like removido."));
         }
-        catch (NewsOrUserNotFoundException | CommentOrLikeNotFound e) {
+        catch (NewsOrUserNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new BooleanResponseModel(false,
                     e.getMessage()));
         }

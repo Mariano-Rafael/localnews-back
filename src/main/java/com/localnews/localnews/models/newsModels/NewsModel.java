@@ -30,7 +30,7 @@ public class NewsModel {
     private String urlNews;
 
     @Column(name = "likes_count", nullable = false, columnDefinition = "INT DEFAULT 0")
-    private Integer likesCount;
+    private Integer likesCount = 0;
 
     public NewsModel() {
     }
@@ -42,7 +42,7 @@ public class NewsModel {
         this.author = author;
         this.publicationDate = publicationDate;
         this.urlNews = urlNews;
-        this.likesCount = likesCount;
+        this.likesCount = 0;
     }
 
     public Long getId() {

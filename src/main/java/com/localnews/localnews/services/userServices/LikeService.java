@@ -1,35 +1,59 @@
 package com.localnews.localnews.services.userServices;
 
 import com.localnews.localnews.models.CommentsAndLikesExceptions.CommentOrLikeNotFound;
-import com.localnews.localnews.models.userModels.LikeModel;
-import com.localnews.localnews.repositories.userRepositories.LikeRepository;
+import com.localnews.localnews.models.CommentsAndLikesExceptions.NewsOrUserNotFoundException;
+import com.localnews.localnews.models.newsModels.NewsModel;
+import com.localnews.localnews.repositories.newsRepositories.NewsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class LikeService {
 
     @Autowired
-    private LikeRepository likeRepository;
+    private NewsRepository newsRepository;
 
     // registra o like
-    public LikeModel createLike(LikeModel likeModel) {
-        if (likeModel.getUserModel() == null || likeModel.getNewsModel() == null) {
-            throw new CommentOrLikeNotFound("Necessário informar o comentário e a noticia.");
+    public void addLike(Long newsId) {
+        Optional<NewsModel> newsOptional = newsRepository.findById(newsId);
+
+        if (newsOptional.isPresent()) {
+            NewsModel news = newsOptional.get();
+            news.setLikesCount(news.getLikesCount() + 1);
+            newsRepository.save(news);
+        } else {
+            throw new NewsOrUserNotFoundException("Noticia nao encontrada.");
         }
-        return likeRepository.save(likeModel);
     }
 
     // retira o like
-    public void unlike(Long id) {
-        if (!likeRepository.existsById(id)) {
-            throw new CommentOrLikeNotFound("Sem like registrado para a notícia.");
+    public void removeLike(Long newsId) {
+        Optional<NewsModel> newsOptional = newsRepository.findById(newsId);
+
+        if (newsOptional.isPresent()) {
+            NewsModel news = newsOptional.get();
+
+            if (news.getLikesCount() > 0) {
+                news.setLikesCount(news.getLikesCount() - 1);
+                newsRepository.save(news);
+            } else {
+                throw new CommentOrLikeNotFound("Noticia nao possui like.");
+            }
+        } else {
+            throw new NewsOrUserNotFoundException("Noticia nao encontrada.");
         }
-        likeRepository.deleteById(id);
     }
 
     // total de likes por noticia
-    public int countLikes(Long id) {
-        return likeRepository.countByNewsId(id);
+    public int countLikesByNewsId(Long newsId) {
+        Optional<NewsModel> newsOptional = newsRepository.findById(newsId);
+
+        if (newsOptional.isPresent()) {
+            return newsOptional.get().getLikesCount();
+        } else {
+            throw new NewsOrUserNotFoundException("Noticia nao encontrada.");
+        }
     }
 }
