@@ -1,4 +1,4 @@
-package com.localnews.localnews.models.CommentsAndLikesExceptions;
+package com.localnews.localnews.models.commentsAndLikesExceptions;
 
 import java.io.Serial;
 

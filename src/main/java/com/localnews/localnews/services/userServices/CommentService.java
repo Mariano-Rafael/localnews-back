@@ -1,8 +1,8 @@
 package com.localnews.localnews.services.userServices;
 
 import com.localnews.localnews.models.BooleanResponseModel;
-import com.localnews.localnews.models.CommentsAndLikesExceptions.CommentOrLikeNotFound;
-import com.localnews.localnews.models.CommentsAndLikesExceptions.NewsOrUserNotFoundException;
+import com.localnews.localnews.models.commentsAndLikesExceptions.CommentOrLikeNotFound;
+import com.localnews.localnews.models.commentsAndLikesExceptions.NewsOrUserNotFoundException;
 import com.localnews.localnews.models.userModels.CommentModel;
 import com.localnews.localnews.repositories.userRepositories.CommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;

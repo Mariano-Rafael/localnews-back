@@ -48,8 +48,12 @@ public class LikeService {
 
     // total de likes por noticia
     public int countLikesByNewsId(Long newsId) {
-        return newsRepository.findById(newsId)
-                .map(NewsModel::getLikesCount)
-                .orElse(0);
+        Optional<NewsModel> newsOptional = newsRepository.findById(newsId);
+
+        if (newsOptional.isPresent()) {
+            return newsOptional.get().getLikesCount();
+        } else {
+            throw new NewsOrUserNotFoundException("Noticia nao encontrada.");
+        }
     }
 }

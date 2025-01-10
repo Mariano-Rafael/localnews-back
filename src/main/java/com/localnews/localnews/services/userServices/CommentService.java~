@@ -2,6 +2,7 @@ package com.localnews.localnews.services.userServices;
 
 import com.localnews.localnews.models.BooleanResponseModel;
 import com.localnews.localnews.models.CommentsAndLikesExceptions.CommentOrLikeNotFound;
+import com.localnews.localnews.models.CommentsAndLikesExceptions.NewsOrUserNotFoundException;
 import com.localnews.localnews.models.userModels.CommentModel;
 import com.localnews.localnews.repositories.userRepositories.CommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,12 @@ public class CommentService {
 
     // atualiza comentário pelo id do mesmo
     public CommentModel updateComment(Long id, CommentModel commentModel) {
+        if (commentModel.getUserModel() == null || commentModel.getNewsModel() == null) {
+            throw new NewsOrUserNotFoundException("Necessário informar o comentário e a noticia.");
+        }
+        if (commentModel.getComment() == null || commentModel.getComment().isEmpty()) {
+            throw new CommentOrLikeNotFound("Comentário inválido.");
+        }
         return commentRepository.findById(id)
                 .map(existingComment -> {
                     existingComment.setComment(commentModel.getComment());
