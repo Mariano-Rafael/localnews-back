@@ -1,8 +1,6 @@
 package com.localnews.localnews.services.pollServices;
 
-import com.localnews.localnews.models.BooleanResponseModel;
 import com.localnews.localnews.models.PollExceptions.GenericErrorCreatePoll;
-import com.localnews.localnews.models.PollExceptions.GenericErrorRegisterVote;
 import com.localnews.localnews.models.PollModels.PollOption;
 import com.localnews.localnews.repositories.PollRepositories.PollOptionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,5 +22,4 @@ public class PollOptionService {
         option.setVotes(option.getVotes() + 1);
         return pollOptionRepository.save(option);
     }
-
 }

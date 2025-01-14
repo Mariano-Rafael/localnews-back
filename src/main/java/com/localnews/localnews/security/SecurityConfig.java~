@@ -28,7 +28,7 @@ public class SecurityConfig {
                     req.requestMatchers("/comments/**").permitAll();
                     req.requestMatchers("/likes/**").permitAll();
                     req.requestMatchers("/polls/**").permitAll();
-                    req.requestMatchers("/likes/**").permitAll();
+                    req.requestMatchers("/poll-option/**").permitAll();
                 })
                 .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
                 .build();
