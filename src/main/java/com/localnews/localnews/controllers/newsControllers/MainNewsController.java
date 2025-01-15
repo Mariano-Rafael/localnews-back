@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -18,7 +19,7 @@ public class MainNewsController {
     }
 
     @GetMapping("/main-news")
-    public Map<String, String> getMainNews() {
+    public List<Map<String, String>> getMainNews() {
         return mainNewsService.fetchMainNews();
     }
 }

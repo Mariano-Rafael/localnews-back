@@ -82,12 +82,11 @@ public class UserService {
     public UserModel login(UserModel userModel) {
         return userRepository.findByUsername(userModel.getUsername())
                 .map(user -> {
-                    if (passwordEncoder.matches(userModel.getPassword(), user.getPassword())) {
-                        return user;
-                    } else {
-                        throw new InvalidPasswordException("Senha inválida.");
-                    }
-                })
-                .orElseThrow(() -> new UserNotFoundException("Usuário não encontrado."));
+                            if (passwordEncoder.matches(userModel.getPassword(), user.getPassword())) {
+                                return user;
+                            }
+                            throw new InvalidPasswordException("Senha inválida.");
+                        }
+                ).orElseThrow(() -> new UserNotFoundException("Usuário nao encontrado."));
     }
 }

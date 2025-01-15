@@ -92,4 +92,20 @@ public class UserController {
                     "Erro interno."));
         }
     }
+
+    // login do usuário
+    @PostMapping("/login")
+    public ResponseEntity<?> loginUser(@Validated @RequestBody UserModel userModel) {
+        try {
+            UserModel loggedInUser = userService.login(userModel);
+            return ResponseEntity.ok(new BooleanResponseModel(true, "Login realizado com sucesso."));
+        } catch (UserNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new BooleanResponseModel(false, e.getMessage()));
+        } catch (InvalidPasswordException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new BooleanResponseModel(false, e.getMessage()));
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new BooleanResponseModel(false, "Erro interno no servidor."));
+        }
+    }
 }
+

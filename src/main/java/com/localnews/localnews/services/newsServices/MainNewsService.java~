@@ -45,9 +45,7 @@ public class MainNewsService {
                 if (imageUrl != null) {
                     news.put("image", imageUrl);
                 }
-                if (news.containsKey("image")) {
-                    newsList.add(news);
-                }
+                newsList.add(news);
             }
 
         } catch (NullPointerException | URISyntaxException | MalformedURLException e) {
