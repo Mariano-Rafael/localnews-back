@@ -1,8 +1,5 @@
 package com.localnews.localnews.models;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-
-@JsonInclude(JsonInclude.Include.NON_NULL)
 public class BooleanResponseModel {
     private boolean status;
     private String message;
