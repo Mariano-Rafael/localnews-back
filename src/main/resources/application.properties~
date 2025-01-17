@@ -11,4 +11,3 @@ spring.config.use-legacy-processing=true
 
 server.tomcat.max-connections=200
 server.tomcat.max-threads=200
-spring.datasource.hikari.maximum-pool-size=20

@@ -42,7 +42,7 @@ public class UserService {
         return userRepository.save(userModel);
     }
 
-    // retorna pelo ido usando o DTO
+    // retorna pelo id usando o DTO
     public Optional<UserDTO> getUserById(Long id) {
         if (userRepository.findUsernameAndEmailById(id).isEmpty()) {
             throw new UserNotFoundException("Usuário não encontrado.");

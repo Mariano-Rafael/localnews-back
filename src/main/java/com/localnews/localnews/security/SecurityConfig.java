@@ -30,6 +30,7 @@ public class SecurityConfig {
                     req.requestMatchers("/polls/**").permitAll();
                     req.requestMatchers("/poll-option/**").permitAll();
                     req.requestMatchers("/main/**").permitAll();
+                    req.requestMatchers("/bus/**").permitAll();
                 })
                 .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
                 .build();

@@ -2,7 +2,7 @@ package com.localnews.localnews.services.pollServices;
 
 import com.localnews.localnews.models.PollExceptions.GenericErrorCreatePoll;
 import com.localnews.localnews.models.PollModels.PollOption;
-import com.localnews.localnews.repositories.PollRepositories.PollOptionRepository;
+import com.localnews.localnews.repositories.pollRepositories.PollOptionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

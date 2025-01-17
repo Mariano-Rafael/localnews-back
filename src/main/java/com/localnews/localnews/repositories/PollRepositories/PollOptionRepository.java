@@ -1,4 +1,4 @@
-package com.localnews.localnews.repositories.PollRepositories;
+package com.localnews.localnews.repositories.pollRepositories;
 
 import com.localnews.localnews.models.PollModels.PollOption;
 import org.springframework.data.jpa.repository.JpaRepository;

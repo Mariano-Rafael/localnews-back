@@ -1,0 +1,51 @@
+package com.localnews.localnews.controllers.busControllers;
+
+import com.localnews.localnews.models.BooleanResponseModel;
+import com.localnews.localnews.models.busModels.BusModel;
+import com.localnews.localnews.services.busServices.BusService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
+
+@RestController
+@RequestMapping("/bus")
+public class BusController {
+
+    @Autowired
+    private BusService busService;
+
+    @PostMapping("/create")
+    public ResponseEntity<?> createBus(@Validated @RequestBody BusModel busModel) {
+        try {
+            BusModel createdBus = busService.createBus(busModel);
+            return ResponseEntity.status(HttpStatus.CREATED).body(new BooleanResponseModel(true,
+                    "Linha criada com sucesso."));
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new BooleanResponseModel(false,
+                    "Erro interno."));
+        }
+    }
+
+    @GetMapping("info/{route}/{dayOfWeek}")
+    public ResponseEntity<?> getBusByRoute(@PathVariable String route, @PathVariable String dayOfWeek) {
+        try {
+            List<BusModel> busModel = busService.getBusByRouteAndDayOfWeek(route, dayOfWeek);
+
+            if (!busModel.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.OK).body(busModel);
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new BooleanResponseModel(false,
+                        "Linha não encontrada."));
+            }
+
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new BooleanResponseModel(false,
+                    e.getMessage()));
+        }
+    }
+}
