@@ -23,14 +23,8 @@ public class SecurityConfig {
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(req -> {
                     req.requestMatchers(toH2Console()).permitAll();
-                    req.requestMatchers("/users/**").permitAll();
-                    req.requestMatchers("/news/**").permitAll();
-                    req.requestMatchers("/comments/**").permitAll();
-                    req.requestMatchers("/likes/**").permitAll();
-                    req.requestMatchers("/polls/**").permitAll();
-                    req.requestMatchers("/poll-option/**").permitAll();
-                    req.requestMatchers("/main/**").permitAll();
-                    req.requestMatchers("/bus/**").permitAll();
+                    req.requestMatchers("/**").permitAll();
+
                 })
                 .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
                 .build();

@@ -25,7 +25,7 @@ public class MainNewsService {
         List<Map<String, String>> newsList = new ArrayList<>();
 
         try {
-            URI uri = new URI("https://g1.globo.com/rss/g1/");
+            URI uri = new URI("https://g1.globo.com/rss/g1/pr/parana/");
             URL url = uri.toURL();
             SyndFeedInput input = new SyndFeedInput();
             SyndFeed feed = input.build(new XmlReader(url));
