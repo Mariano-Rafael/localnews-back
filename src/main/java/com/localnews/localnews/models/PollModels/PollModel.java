@@ -2,6 +2,7 @@ package com.localnews.localnews.models.PollModels;
 
 import jakarta.persistence.*;
 
+import java.util.Comparator;
 import java.util.List;
 
 @Entity
@@ -43,6 +44,9 @@ public class PollModel {
     }
 
     public List<PollOption> getOptions() {
+        if (options != null) {
+            options.sort(Comparator.comparingLong(PollOption::getId));
+        }
         return options;
     }
 

@@ -1,6 +1,9 @@
 package com.localnews.localnews.models.userModels;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 public class UserModel {
@@ -17,6 +20,9 @@ public class UserModel {
 
     @Column(nullable = false)
     private String password;
+
+    @OneToMany(mappedBy = "userModel", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<CommentModel> comments;
 
     public UserModel() {
     }
@@ -58,5 +64,9 @@ public class UserModel {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public List<CommentModel> getComments() {
+        return comments;
     }
 }

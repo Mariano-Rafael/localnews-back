@@ -1,7 +1,0 @@
-package com.localnews.localnews.models.commentModels;
-
-import jakarta.persistence.Entity;
-
-@Entity
-public class CommentModel {
-}

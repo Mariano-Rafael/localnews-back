@@ -99,8 +99,9 @@ public class UserController {
     public ResponseEntity<?> loginUser(@Validated @RequestBody UserModel userModel) {
         try {
             UserModel loggedInUser = userService.login(userModel);
+
             return ResponseEntity.ok(new BooleanResponseModel(true,
-                    "Login realizado com sucesso.", loggedInUser.getUsername()));
+                    "Login realizado com sucesso.", loggedInUser.getUsername(), loggedInUser.getId()));
         } catch (UserNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new BooleanResponseModel(false,
                     e.getMessage()));

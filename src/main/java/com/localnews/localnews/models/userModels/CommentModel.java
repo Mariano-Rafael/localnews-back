@@ -1,7 +1,10 @@
 package com.localnews.localnews.models.userModels;
 
-import com.localnews.localnews.models.newsModels.NewsModel;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.localnews.localnews.models.PollModels.PollModel;
 import jakarta.persistence.*;
+
+import java.time.LocalDateTime;
 
 @Entity
 public class CommentModel {
@@ -17,17 +20,21 @@ public class CommentModel {
     private UserModel userModel;
 
     @ManyToOne
-    @JoinColumn(name = "news_id", nullable = false)
-    private NewsModel newsModel;
+    @JoinColumn(name = "poll_id", nullable = false)
+    private PollModel pollModel;
+
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
 
     public CommentModel() {
     }
 
-    public CommentModel(Long id, String comment, UserModel userModel, NewsModel newsModel) {
+    public CommentModel(Long id, String comment, UserModel userModel, PollModel pollModel, LocalDateTime createdAt) {
         this.id = id;
         this.comment = comment;
         this.userModel = userModel;
-        this.newsModel = newsModel;
+        this.pollModel = pollModel;
+        this.createdAt = createdAt;
     }
 
     public Long getId() {
@@ -54,11 +61,24 @@ public class CommentModel {
         this.userModel = userModel;
     }
 
-    public NewsModel getNewsModel() {
-        return newsModel;
+    public PollModel getPollModel() {
+        return pollModel;
     }
 
-    public void setNewsModel(NewsModel newsModel) {
-        this.newsModel = newsModel;
+    public void setPollModel(PollModel pollModel) {
+        this.pollModel = pollModel;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    @PrePersist
+    protected void onCreate() {
+        createdAt = LocalDateTime.now();
     }
 }

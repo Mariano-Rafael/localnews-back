@@ -7,6 +7,7 @@ public class BooleanResponseModel {
     private boolean status;
     private String message;
     private Object data;
+    private Object metaData;
 
     public BooleanResponseModel() {
     }
@@ -23,6 +24,14 @@ public class BooleanResponseModel {
         this.status = status;
         this.message = message;
         this.data = data;
+
+    }
+
+    public BooleanResponseModel(boolean status, String message, Object data, Object metaData) {
+        this.status = status;
+        this.message = message;
+        this.data = data;
+        this.metaData = metaData;
 
     }
 
@@ -48,5 +57,9 @@ public class BooleanResponseModel {
 
     public void setData(String data) {
         this.data = data;
+    }
+
+    public Object getMetaData() {
+        return metaData;
     }
 }
