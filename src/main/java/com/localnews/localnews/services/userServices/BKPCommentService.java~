@@ -1,0 +1,53 @@
+package com.localnews.localnews.services.userServices;
+
+import com.localnews.localnews.models.BooleanResponseModel;
+import com.localnews.localnews.models.commentsAndLikesExceptions.CommentOrLikeNotFound;
+import com.localnews.localnews.models.commentsAndLikesExceptions.NewsOrUserNotFoundException;
+import com.localnews.localnews.models.userModels.CommentModel;
+import com.localnews.localnews.repositories.userRepositories.BKPCommentRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
+public class BKPCommentService {
+
+    @Autowired
+    private BKPCommentRepository BKPCommentRepository;
+
+    // posta novo comentário
+    public CommentModel createComment(CommentModel commentModel) {
+        if (commentModel.getUserModel() == null || commentModel.getNewsModel() == null) {
+            throw new CommentOrLikeNotFound("Necessário informar o comentário e a noticia.");
+        }
+        if (commentModel.getComment() == null || commentModel.getComment().isEmpty()) {
+            throw new CommentOrLikeNotFound("Comentário inválido.");
+        }
+        return BKPCommentRepository.save(commentModel);
+    }
+
+    // atualiza comentário pelo id do mesmo
+    public CommentModel updateComment(Long id, CommentModel commentModel) {
+        if (commentModel.getUserModel() == null || commentModel.getNewsModel() == null) {
+            throw new NewsOrUserNotFoundException("Necessário informar o comentário e a noticia.");
+        }
+        if (commentModel.getComment() == null || commentModel.getComment().isEmpty()) {
+            throw new CommentOrLikeNotFound("Comentário inválido.");
+        }
+        return BKPCommentRepository.findById(id)
+                .map(existingComment -> {
+                    existingComment.setComment(commentModel.getComment());
+                    return BKPCommentRepository.save(existingComment);
+                })
+                .orElseThrow(() -> new RuntimeException(String.valueOf(new BooleanResponseModel(false,
+                        "Comentário nao encontrado"))));
+    }
+
+    // deleta comentário pelo id do mesmo
+    public void deleteComment(Long id) {
+        if (!BKPCommentRepository.existsById(id)) {
+            throw new CommentOrLikeNotFound("Comentário nao encontrado.");
+        }
+        BKPCommentRepository.deleteById(id);
+    }
+}
+

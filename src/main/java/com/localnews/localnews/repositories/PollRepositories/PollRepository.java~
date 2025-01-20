@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface PollRepository extends JpaRepository<PollModel, Long> {
 
+    public List<PollModel> infoPoll(Long id);
+
 }

@@ -8,6 +8,8 @@ import com.localnews.localnews.repositories.pollRepositories.PollRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class PollService {
 
@@ -17,7 +19,7 @@ public class PollService {
     @Autowired
     private PollOptionRepository pollOptionRepository;
 
-    public PollModel createPoll(PollModel pollModel) {
+    public void createPoll(PollModel pollModel) {
         if (pollModel.getQuestion() == null || pollModel.getQuestion().isEmpty()) {
             throw new GenericErrorCreatePoll("Enquete não pode ser criada sem pergunta");
         }
@@ -27,6 +29,14 @@ public class PollService {
         for (PollOption option : pollModel.getOptions()) {
             option.setPoll(pollModel);
         }
-        return pollRepository.save(pollModel);
+        pollRepository.save(pollModel);
+    }
+
+    public List<PollModel> getAllPolls() {
+        return pollRepository.findAll();
+    }
+
+    public PollModel infoPoll(Long id) {
+        return pollRepository.findById(id).orElse(null);
     }
 }
