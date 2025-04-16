@@ -2,6 +2,7 @@ package com.localnews.localnews.models.PollModels;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
@@ -19,12 +20,13 @@ public class PollModel {
     private List<PollOption> options;
 
     public PollModel() {
+        this.options = new ArrayList<>();
     }
 
     public PollModel(Long id, String question, List<PollOption> options) {
         this.id = id;
         this.question = question;
-        this.options = options;
+        this.options = new ArrayList<>();
     }
 
     public Long getId() {
@@ -44,13 +46,22 @@ public class PollModel {
     }
 
     public List<PollOption> getOptions() {
-        if (options != null) {
-            options.sort(Comparator.comparingLong(PollOption::getId));
-        }
+       // if (options != null) {
+         //   options.sort(Comparator.comparingLong(PollOption::getId));
+        //}
         return options;
     }
 
     public void setOptions(List<PollOption> options) {
         this.options = options;
+    }
+
+    @Override
+    public String toString() {
+        return "PollModel{" +
+                "id=" + id +
+                ", question='" + question + '\'' +
+                ", options=" + options +
+                '}';
     }
 }

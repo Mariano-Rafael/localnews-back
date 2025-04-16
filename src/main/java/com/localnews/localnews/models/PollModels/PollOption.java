@@ -61,4 +61,14 @@ public class PollOption {
     public void setVotes(int votes) {
         this.votes = votes;
     }
+
+    @Override
+    public String toString() {
+        return "PollOption{" +
+                "id=" + id +
+                ", poll=" + poll +
+                ", optionText='" + optionText + '\'' +
+                ", votes=" + votes +
+                '}';
+    }
 }

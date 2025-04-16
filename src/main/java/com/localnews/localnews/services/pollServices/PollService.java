@@ -7,11 +7,14 @@ import com.localnews.localnews.repositories.pollRepositories.PollOptionRepositor
 import com.localnews.localnews.repositories.pollRepositories.PollRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
 public class PollService {
+
+    private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(PollService.class);
 
     @Autowired
     private PollRepository pollRepository;
@@ -19,7 +22,9 @@ public class PollService {
     @Autowired
     private PollOptionRepository pollOptionRepository;
 
+    @Transactional
     public void createPoll(PollModel pollModel) {
+       // logger.info("Iniciando PollService.createPoll() com PollModel: {}", pollModel);
         if (pollModel.getQuestion() == null || pollModel.getQuestion().isEmpty()) {
             throw new GenericErrorCreatePoll("Enquete não pode ser criada sem pergunta");
         }

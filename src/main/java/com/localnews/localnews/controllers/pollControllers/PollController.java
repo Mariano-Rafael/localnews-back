@@ -12,9 +12,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 import java.util.Optional;
 
+import static org.slf4j.LoggerFactory.getLogger;
+
 @RestController
 @RequestMapping("/polls")
 public class PollController {
+
+    private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(PollController.class);
 
     @Autowired
     private PollService pollService;
@@ -28,9 +32,10 @@ public class PollController {
         }
         catch (GenericErrorCreatePoll e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new BooleanResponseModel(false,
-                    e.getMessage()));
+                    "Erro no formato da requisição."));
         }
         catch (RuntimeException e) {
+            //logger.error("erro: ", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new BooleanResponseModel(false,
                     "Erro interno."));
         }
@@ -43,7 +48,7 @@ public class PollController {
         }
         catch (GenericErrorCreatePoll e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new BooleanResponseModel(false,
-                    e.getMessage()));
+                    "Erro no formato da requisição."));
         }
         catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new BooleanResponseModel(false,
@@ -64,7 +69,7 @@ public class PollController {
         }
         catch (GenericErrorCreatePoll e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new BooleanResponseModel(false,
-                    e.getMessage()));
+                    "Erro no formato da requisição."));
         }
         catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new BooleanResponseModel(false,
